@@ -110,6 +110,8 @@ app.delete("/foods/:id", (req, res) => {
   res.status(204).send();
 });
 
+app.use("/api", sessionStore);
+
 // START THE SERVER
 // =============================================================================
 var http = require("http");
