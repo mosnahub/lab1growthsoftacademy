@@ -82,33 +82,35 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Tee is GAY");
-});
+app.use("/api", require("./app/routes/food_route.js"));
 
-app.get("/foods", (req, res) => {
-  res.json(foods);
-});
+// app.get("/", (req, res) => {
+//   res.send("Tee is GAY");
+// });
 
-app.get("/foods/:id", (req, res) => {
-  res.json(foods.find(food => food.id === req.params.id));
-});
+// app.get("/foods", (req, res) => {
+//   res.json(foods);
+// });
 
-app.post("/foods", (req, res) => {
-  foods.push(req.body);
-  res.status(201).json(req.body);
-});
+// app.get("/foods/:id", (req, res) => {
+//   res.json(foods.find(food => food.id === req.params.id));
+// });
 
-app.put("/foods/:id", (req, res) => {
-  const updateIndex = foods.findIndex(food => food.id === req.params.id);
-  res.json(Object.assign(foods[updateIndex], req.body));
-});
+// app.post("/foods", (req, res) => {
+//   foods.push(req.body);
+//   res.status(201).json(req.body);
+// });
 
-app.delete("/foods/:id", (req, res) => {
-  const deletedIndex = foods.findIndex(food => food.id === req.params.id);
-  foods.splice(deletedIndex, 1);
-  res.status(204).send();
-});
+// app.put("/foods/:id", (req, res) => {
+//   const updateIndex = foods.findIndex(food => food.id === req.params.id);
+//   res.json(Object.assign(foods[updateIndex], req.body));
+// });
+
+// app.delete("/foods/:id", (req, res) => {
+//   const deletedIndex = foods.findIndex(food => food.id === req.params.id);
+//   foods.splice(deletedIndex, 1);
+//   res.status(204).send();
+// });
 
 // START THE SERVER
 // =============================================================================
