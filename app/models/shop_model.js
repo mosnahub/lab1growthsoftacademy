@@ -14,8 +14,8 @@ var shopSchema = new Schema({
         default: null
     },
     tel: {
-        type: Number,
-        default: 0
+        type: String,
+        default: null
     }
 });
 

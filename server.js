@@ -83,6 +83,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/api", require("./app/routes/food_route.js"));
+app.use("/api", require("./app/routes/shop_route.js"));
 
 // app.get("/", (req, res) => {
 //   res.send("Tee is GAY");

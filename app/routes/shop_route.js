@@ -9,15 +9,15 @@ router.post("/shop/", function (request, response) {
     let shop = new Shop(); // Define 'shop' is Shop (shopSchema)
     console.log(shop);
     shop.name = request.body.shopName;
-    shop.address = request.body.shopAddress;
+    shop.address = request.body.address;
 
-    console.log(parseFloat(request.body.tel));
-    if (isNaN(parseFloat(request.body.tel))) // Validate tel is number
+    console.log(parseInt(request.body.tel));
+    if (isNaN(parseInt(request.body.tel))) // Validate tel is number
         response.status(500).send({
             message: "Telephone is not a number."
         });
     else {
-        shop.tel = request.body.tel;
+        shop.tel = String(request.body.tel);
         shop.save(function (err, msgResponse) {
             if (err) response.status(500).send({
                 message: err
@@ -28,6 +28,8 @@ router.post("/shop/", function (request, response) {
             }
         });
     }
+
+
 });
 
 module.exports = router;
