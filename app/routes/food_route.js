@@ -29,4 +29,61 @@ router.post("/food/", function (request, response) {
     }
 });
 
+router.get("/food/", function (request, response) {
+    console.log("REQUEST GET!!");
+    console.log(request.params.id);
+    let data = null;
+    Food.find(function (err, mgResponse) {
+        response.send(mgResponse);
+    });
+});
+
+router.get("/food/:id", function (request, response) {
+    console.log("REQUEST GET!!");
+    console.log(request.params.id);
+    let data = null;
+    findFoodById(request.params.id, function (err, mgResponse) {
+        if (mgResponse == undefined)
+            response
+            .status(404)
+            .send({
+                message: `id ${request.params.id} not found`
+            });
+        else response.send(mgResponse);
+    });
+});
+
+router.delete("/food/:id", function (request, response) {
+    console.log("REQUEST DELETE!!");
+    console.log(request.params.id);
+    let data = null;
+    deleteFoodById(request.params.id, function (err, mgResponse) {
+        if (mgResponse == undefined)
+            response
+            .status(404)
+            .send({
+                message: `id ${request.params.id} not found`
+            });
+        else response.send(mgResponse);
+    });
+});
+
 module.exports = router;
+
+function findFoodById(id, callback) {
+    Food.findById(id, function (err, mgResponse) {
+        console.log("GET COMPLETE");
+        console.log(mgResponse);
+        callback(err, mgResponse);
+
+        // console.log(mgResponse[0].name);
+    });
+}
+
+function deleteFoodById(id, callback) {
+    Food.deleteOne(id, function (err, mgResponse) {
+        console.log("DELETE COMPLETE");
+        console.log(mgResponse);
+        callback(err, mgResponse);
+    });
+}
