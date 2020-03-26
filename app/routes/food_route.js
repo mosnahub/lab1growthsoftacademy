@@ -73,11 +73,11 @@ router.delete("/food/:id", function (request, response) {
     });
 });
 
-// 
+// Update Data (PUT)
 router.put("/food/:id", function (request, response) {
     console.log("REQUEST PUT!!");
     console.log(request.params.id);
-    let data = null;
+    const data = null;
     putFoodById(request.params.id, function (err, mgResponse) {
         if (mgResponse == undefined)
             response
@@ -89,6 +89,8 @@ router.put("/food/:id", function (request, response) {
     });
 });
 
+
+// Export
 module.exports = router;
 
 function findFoodById(id, callback) {
@@ -96,17 +98,10 @@ function findFoodById(id, callback) {
         console.log("GET COMPLETE");
         console.log(mgResponse);
         callback(err, mgResponse);
-
-        // console.log(mgResponse[0].name);
     });
 }
 
 function deleteFoodById(id, callback) {
-    // Food.deleteOne(id, function (err, mgResponse) {
-    //     console.log("DELETE COMPLETE");
-    //     console.log(mgResponse);
-    //     callback(err, mgResponse);
-    // });
     Food.remove({ _id: id }, function (err, mgResponse) {
         console.log("DELETE COMPLETE");
         console.log(mgResponse);
@@ -115,10 +110,7 @@ function deleteFoodById(id, callback) {
 }
 
 function putFoodById(id, callback) {
-    let food = new Food();
-    // food.name = request.body.foodName;
-    // food.calories = request.body.calories;
-    Food.findOneAndUpdate({ _id: id }, {$set: {foodName: "ตี๋"}}, function (err, mgResponse) {
+    Food.findOneAndUpdate({ _id: id }, Food, function (err, mgResponse) {
         if (err) throw err;
         console.log("UPDATE COMPLETE");
         console.log(mgResponse);
