@@ -76,9 +76,9 @@ router.delete("/food/:id", function (request, response) {
 // Update Data (PUT)
 router.put("/food/:id", function (request, response) {
     console.log("REQUEST PUT!!");
-    console.log(request.params.id);
+    console.log(request.query.id);
     const data = null;
-    putFoodById(request.params.id, function (err, mgResponse) {
+    putFoodById(request.params.id, request.body.foodName, request.body.calories, function (err, mgResponse) {
         if (mgResponse == undefined)
             response
             .status(404)
@@ -109,8 +109,8 @@ function deleteFoodById(id, callback) {
     });
 }
 
-function putFoodById(id, callback) {
-    Food.findOneAndUpdate({ _id: id }, Food, function (err, mgResponse) {
+function putFoodById(id, name, calories, callback) {
+    Food.update({ _id: id }, {$set: {name: name, calories: calories}}, function (err, mgResponse) {
         if (err) throw err;
         console.log("UPDATE COMPLETE");
         console.log(mgResponse);
