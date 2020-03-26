@@ -29,6 +29,7 @@ router.post("/food/", function (request, response) {
     }
 });
 
+// Find All Data (GET)
 router.get("/food/", function (request, response) {
     console.log("REQUEST GET!!");
     console.log(request.params.id);
@@ -38,6 +39,8 @@ router.get("/food/", function (request, response) {
     });
 });
 
+
+// Find Data by ID (GET)
 router.get("/food/:id", function (request, response) {
     console.log("REQUEST GET!!");
     console.log(request.params.id);
@@ -53,11 +56,29 @@ router.get("/food/:id", function (request, response) {
     });
 });
 
+
+// Delete Data by ID (DELETE)
 router.delete("/food/:id", function (request, response) {
     console.log("REQUEST DELETE!!");
     console.log(request.params.id);
     let data = null;
     deleteFoodById(request.params.id, function (err, mgResponse) {
+        if (mgResponse == undefined)
+            response
+            .status(404)
+            .send({
+                message: `id ${request.params.id} not found`
+            });
+        else response.send(mgResponse);
+    });
+});
+
+// 
+router.put("/food/:id", function (request, response) {
+    console.log("REQUEST PUT!!");
+    console.log(request.params.id);
+    let data = null;
+    putFoodById(request.params.id, function (err, mgResponse) {
         if (mgResponse == undefined)
             response
             .status(404)
@@ -87,6 +108,19 @@ function deleteFoodById(id, callback) {
     //     callback(err, mgResponse);
     // });
     Food.remove({ _id: id }, function (err, mgResponse) {
+        console.log("DELETE COMPLETE");
+        console.log(mgResponse);
+        callback(err, mgResponse);
+    });
+}
+
+function putFoodById(id, callback) {
+    let food = new Food();
+    // food.name = request.body.foodName;
+    // food.calories = request.body.calories;
+    Food.findOneAndUpdate({ _id: id }, {$set: {foodName: "ตี๋"}}, function (err, mgResponse) {
+        if (err) throw err;
+        console.log("UPDATE COMPLETE");
         console.log(mgResponse);
         callback(err, mgResponse);
     });
