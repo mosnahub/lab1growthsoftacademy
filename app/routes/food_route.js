@@ -81,8 +81,12 @@ function findFoodById(id, callback) {
 }
 
 function deleteFoodById(id, callback) {
-    Food.deleteOne(id, function (err, mgResponse) {
-        console.log("DELETE COMPLETE");
+    // Food.deleteOne(id, function (err, mgResponse) {
+    //     console.log("DELETE COMPLETE");
+    //     console.log(mgResponse);
+    //     callback(err, mgResponse);
+    // });
+    Food.remove({ _id: id }, function (err, mgResponse) {
         console.log(mgResponse);
         callback(err, mgResponse);
     });
